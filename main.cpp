@@ -1,7 +1,6 @@
-#include<GL/Glut.h>
-#include<stdlib.h>
-#include<iostream>
-#include "RGBpixmap.h"
+#include <GL/Glut.h>
+#include <iostream>
+#include <stdlib.h>
 
 int i = 1;
 int line_x[100], line_y[100];
@@ -42,6 +41,25 @@ void display(void) {
 	glLoadIdentity();
 	gluOrtho2D(0.0, width_f, 0.0, height_f);
 
+	//Drawing the background quad:
+	glPushMatrix();
+	glLoadIdentity();
+
+	glColor3f(0, 1, 0);
+	glBegin(GL_QUADS);
+	glTexCoord2f(0, 0);
+	glVertex2f(-1.0f, -1.0f);
+	glTexCoord2f(1, 0);
+	glVertex2f(1.0f, -1.0f);
+	glTexCoord2f(1, 1);
+	glVertex2f(1.0f, 1.0f);
+	glTexCoord2f(0, 1);
+	glVertex2f(-1.0f, 1.0f);
+	glEnd();
+
+	glPopMatrix();
+
+	//Drawing the dots & lines
 	line_x[i] = first_line_x;
 	line_y[i] = first_line_y;
 	line_y[0] = first_line_y;
@@ -52,7 +70,7 @@ void display(void) {
 	for (int k = 0; k <= i-1; k++) {
 
 		glColor3f(1, 0, 0);
-		glPointSize(2);
+		glPointSize(1);
 		glBegin(GL_LINES);
 		glVertex2i(line_x[k], line_y[k]);
 		glVertex2i(line_x[k + 1], line_y[k + 1]);
@@ -60,7 +78,7 @@ void display(void) {
 		glEnd();
 
 		glColor3f(1, 0, 0);
-		glPointSize(10);
+		glPointSize(5);
 		glBegin(GL_POINTS);
 		glVertex2i(dot_x[k], dot_y[k]);
 
@@ -83,4 +101,5 @@ int main(int argc, char** argv) {
 	glutDisplayFunc(display);
 	glutMouseFunc(mouse);
 	glutMainLoop();
+	return 0;
 }
