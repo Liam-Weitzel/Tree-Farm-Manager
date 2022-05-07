@@ -48,6 +48,6 @@ void Texture::drawImageQuad(float x,
 	glTexCoord2f(2.0, 2.0); glVertex3f(x + w, y + h, 0.0f);
 	glTexCoord2f(2.0, 0.0); glVertex3f(x + w, y, 0.0f);
 	glEnd();
-
+	glDisable(GL_TEXTURE_2D);
 	glPopMatrix();
 }

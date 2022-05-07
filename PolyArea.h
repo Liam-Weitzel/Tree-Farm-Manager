@@ -9,9 +9,12 @@ class PolyArea
 		int first_dot_x, first_dot_y, first_line_x, first_line_y;
 		int i;
 		float vertices[100];
+		GLfloat r;
+		GLfloat g;
+		GLfloat b;
+		GLfloat o;
 	public:
 		PolyArea();
-		void constructVertices();
 		void setFirstDot(int x, int y);
 		int getFirstDotX();
 		int getFirstDotY();
@@ -25,7 +28,9 @@ class PolyArea
 		int* getDotX();
 		int* getDotY();
 		void DrawArea();
-		float* getVertices();
+		/*float* getVertices();
+		void constructVertices();*/
+		void setRGBO(GLfloat rp, GLfloat gp, GLfloat bp, GLfloat op);
 };
 
 #endif

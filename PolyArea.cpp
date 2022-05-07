@@ -12,6 +12,10 @@ PolyArea::PolyArea() {
 	this->first_dot_y = -1;
 	this->first_line_x = -1;
 	this->i = 1;
+	this->r = 1.0f;
+	this->g = 1.0f;
+	this->b = 1.0f;
+	this->o = 0.5f;
 	//std::cout << "Im constructed! " << this->i << ", " << this->first_line_y;
 }
 
@@ -72,7 +76,7 @@ int* PolyArea::getDotX() {
 int* PolyArea::getDotY() {
 	return this->dot_y;
 }
-
+/*
 void PolyArea::constructVertices() {
 	int counter = 0;
 	for (int i3 = 0; i3 <= this->getI(); i3++) {
@@ -89,7 +93,7 @@ void PolyArea::constructVertices() {
 float* PolyArea::getVertices() {
 	this->constructVertices();
 	return this->vertices;
-}
+}*/
 
 void PolyArea::DrawArea() {
 	this->setPointAt(0, this->getFirstDotX(), this->getFirstDotY());
@@ -98,6 +102,7 @@ void PolyArea::DrawArea() {
 	for (int k = 0; k <= this->getI() - 1; k++) {
 
 		glPointSize(1);
+		glColor4f(this->r, this->g, this->b, this->o);
 		glBegin(GL_LINES);
 		glVertex2i(this->getLineX()[k], this->getLineY()[k]);
 		glVertex2i(this->getLineX()[k + 1], this->getLineY()[k + 1]);
@@ -112,5 +117,25 @@ void PolyArea::DrawArea() {
 
 	}
 
+	glEnable(GL_BLEND);
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+	glColor4f(this->r, this->g, this->b, this->o);
+
+	glBegin(GL_POLYGON);
+	for (int a = 0; a < this->getI(); a++)
+	{
+		glVertex2i(this->getDotX()[a], this->getDotY()[a]);
+	}
+	glEnd();
+
+	glDisable(GL_BLEND);
+
 	glFlush();
+}
+
+void PolyArea::setRGBO(GLfloat rp, GLfloat gp, GLfloat bp, GLfloat op) {
+	this->r = rp;
+	this->g = gp;
+	this->b = bp;
+	this->o = op;
 }

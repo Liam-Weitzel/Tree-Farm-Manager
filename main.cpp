@@ -85,6 +85,8 @@ int main(int argc, char* argv[])
 	w = glutGet(GLUT_WINDOW_WIDTH);
 	h = glutGet(GLUT_WINDOW_HEIGHT);
 	background.glInitTexture();
+	firstarea.setRGBO(0.6f, 0.0f, 0.3f, 0.3f);
+	secondarea.setRGBO(0.2f, 0.8f, 0.6f, 0.5f);
 
 	glutMainLoop();
 	return 0;
