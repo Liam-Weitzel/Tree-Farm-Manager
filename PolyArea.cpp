@@ -12,7 +12,7 @@ PolyArea::PolyArea() {
 	this->first_dot_y = -1;
 	this->first_line_x = -1;
 	this->i = 1;
-	std::cout << "Im constructed! " << this->i << ", " << this->first_line_y;
+	//std::cout << "Im constructed! " << this->i << ", " << this->first_line_y;
 }
 
 void PolyArea::setFirstDot(int x, int y) {
@@ -71,6 +71,24 @@ int* PolyArea::getDotX() {
 
 int* PolyArea::getDotY() {
 	return this->dot_y;
+}
+
+void PolyArea::constructVertices() {
+	int counter = 0;
+	for (int i3 = 0; i3 <= this->getI(); i3++) {
+		this->vertices[counter] = (float)this->dot_x[i3];
+		this->vertices[counter+1] = (float)this->dot_y[i3];
+		counter = counter + 2;
+	}
+	this->vertices[0] = this->getFirstDotX();
+	this->vertices[1] = this->getFirstDotY();
+	this->vertices[(this->i) * 2] = this->getFirstDotX();
+	this->vertices[((this->i) * 2) + 1] = this->getFirstDotY();
+}
+
+float* PolyArea::getVertices() {
+	this->constructVertices();
+	return this->vertices;
 }
 
 void PolyArea::DrawArea() {

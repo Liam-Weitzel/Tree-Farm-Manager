@@ -8,8 +8,10 @@ class PolyArea
 		int dot_x[100], dot_y[100];
 		int first_dot_x, first_dot_y, first_line_x, first_line_y;
 		int i;
+		float vertices[100];
 	public:
 		PolyArea();
+		void constructVertices();
 		void setFirstDot(int x, int y);
 		int getFirstDotX();
 		int getFirstDotY();
@@ -23,6 +25,7 @@ class PolyArea
 		int* getDotX();
 		int* getDotY();
 		void DrawArea();
+		float* getVertices();
 };
 
 #endif
