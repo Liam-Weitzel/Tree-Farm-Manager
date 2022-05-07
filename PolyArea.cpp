@@ -5,6 +5,7 @@
 #include <stdlib.h>
 #include <SOIL/SOIL.h>
 #include "PolyArea.h"
+#include <random>
 
 PolyArea::PolyArea() {
 	this->first_line_y = -1;
@@ -12,10 +13,10 @@ PolyArea::PolyArea() {
 	this->first_dot_y = -1;
 	this->first_line_x = -1;
 	this->i = 1;
-	this->r = 1.0f;
-	this->g = 1.0f;
-	this->b = 1.0f;
-	this->o = 0.5f;
+	this->r = rand() % 2;
+	this->g = rand() % 2;
+	this->b = rand() % 2;
+	this->o = 0.2f;
 	//std::cout << "Im constructed! " << this->i << ", " << this->first_line_y;
 }
 

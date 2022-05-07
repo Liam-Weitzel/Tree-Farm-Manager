@@ -4,11 +4,11 @@
 class PolyArea 
 {
 	private:
-		int line_x[100], line_y[100];
-		int dot_x[100], dot_y[100];
+		int line_x[99], line_y[99];
+		int dot_x[99], dot_y[99];
 		int first_dot_x, first_dot_y, first_line_x, first_line_y;
 		int i;
-		float vertices[100];
+		//float vertices[100];
 		GLfloat r;
 		GLfloat g;
 		GLfloat b;

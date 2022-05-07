@@ -6,37 +6,35 @@
 #include <SOIL/SOIL.h>
 #include "PolyArea.h"
 #include "Texture.h"
+#include "AreaList.h"
 
 double w;
 double h;
 
-PolyArea firstarea;
-PolyArea secondarea;
+AreaList list;
+PolyArea* arealist = list.getAreas();
+int areaselected = 0;
+int numberofareas = 1;
 
 Texture background("image.png");
 
 void mouse(int button, int state, int mousex, int mousey) {
 	if (button == GLUT_LEFT_BUTTON && state == GLUT_DOWN) {
-		if (firstarea.getFirstLineY() == -1) {
-			firstarea.setFirstDot(mousex, h - mousey);
+		if (arealist[areaselected].getFirstLineY() == -1) {
+			arealist[areaselected].setFirstDot(mousex, h - mousey);
 		}
 		else {
-			firstarea.setNextPoint(mousex, h - mousey);
+			arealist[areaselected].setNextPoint(mousex, h - mousey);
 		}
 
 		glClearColor(1, 1, 1, 0);
 		glClear(GL_COLOR_BUFFER_BIT);
 	}
 	else if (button == GLUT_RIGHT_BUTTON && state == GLUT_DOWN) {
-		if (secondarea.getFirstLineY() == -1) {
-			secondarea.setFirstDot(mousex, h - mousey);
+		if (numberofareas <= 30) {
+			areaselected++;
+			numberofareas++;
 		}
-		else {
-			secondarea.setNextPoint(mousex, h - mousey);
-		}
-
-		glClearColor(1, 1, 1, 0);
-		glClear(GL_COLOR_BUFFER_BIT);
 	}
 	glutPostRedisplay();
 }
@@ -64,11 +62,10 @@ void render()
 	glLoadIdentity();
 	gluOrtho2D(0.0, w, 0.0, h);
 
-	//Drawing firstarea
-	firstarea.DrawArea();
-
-	//Drawing secondarea
-	secondarea.DrawArea();
+	//Drawing all areas
+	for (int i = 0; i <= numberofareas; i++) {
+		arealist[i].DrawArea();
+	}
 
 	glutSwapBuffers();
 }
@@ -85,8 +82,6 @@ int main(int argc, char* argv[])
 	w = glutGet(GLUT_WINDOW_WIDTH);
 	h = glutGet(GLUT_WINDOW_HEIGHT);
 	background.glInitTexture();
-	firstarea.setRGBO(0.6f, 0.0f, 0.3f, 0.3f);
-	secondarea.setRGBO(0.2f, 0.8f, 0.6f, 0.5f);
 
 	glutMainLoop();
 	return 0;
