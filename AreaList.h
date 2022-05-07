@@ -5,7 +5,7 @@
 class AreaList
 {
 private:
-	PolyArea list[99];
+	PolyArea list[30];
 
 public:
 	AreaList();
