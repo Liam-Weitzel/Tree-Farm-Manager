@@ -23,6 +23,21 @@ PolyArea::PolyArea() {
 	//std::cout << "Im constructed! " << this->i << ", " << this->first_line_y;
 }
 
+void PolyArea::setLineX(int plinex[]) {
+	memcpy(this->line_x, plinex, 99);
+}
+void PolyArea::setLineY(int pliney[]) {
+	memcpy(this->line_y, pliney, 99);
+}
+void PolyArea::setDotX(int pdotx[]) {
+	memcpy(this->dot_x, pdotx, 99);
+}
+void PolyArea::setDotY(int pdoty[]) {
+	memcpy(this->dot_y, pdoty, 99);
+}
+void PolyArea::setI(int ii) {
+	this->i = ii;
+}
 void PolyArea::setFirstDot(int x, int y) {
 	this->first_dot_x = x;
 	this->first_dot_y = y;

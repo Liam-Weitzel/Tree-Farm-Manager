@@ -1,5 +1,12 @@
 #ifndef POLYAREA_H
 #define POLYAREA_H
+#define _CRT_SECURE_NO_DEPRECATE
+#include <GL/glew.h>
+#include <GL/freeglut.h>
+#include <iostream>
+#include <stdlib.h>
+#include <SOIL/SOIL.h>
+#include <random>
 #include "imgui.h"
 #include "imgui_impl_glut.h"
 #include "imgui_impl_opengl2.h"
@@ -19,6 +26,11 @@ class PolyArea
 	public:
 		PolyArea();
 		void setFirstDot(int x, int y);
+		void setLineX(int plinex[]);
+		void setLineY(int pliney[]);
+		void setDotX(int pdotx[]);
+		void setDotY(int pdoty[]);
+		void setI(int ii);
 		int getFirstDotX();
 		int getFirstDotY();
 		int getFirstLineX();

@@ -10,17 +10,28 @@
 #include "PolyArea.h"
 #include "Texture.h"
 #include "AreaList.h"
+#include "Farm.h"
+#include "FarmList.h"
+#include "Construction.h"
+#include "ConstructionList.h"
 
 //default value for color selector in gui
-static ImVec4 fill_color = ImVec4(0.45f, 0.55f, 0.60f, 0.30f);
+static ImVec4 fill_color = ImVec4(0.45f, 0.55f, 0.60f, 0.20f);
+static ImVec4 prev_fill_color = ImVec4(0.45f, 0.55f, 0.60f, 0.20f);
 
 //window width and height
 double w;
 double h;
 
-//Selected area objects & vars
+//Generate lists for all areas and children of areas
 AreaList list;
 PolyArea* arealist = list.getAreas();
+FarmList list2;
+Farm* farmlist = list2.getFarms();
+ConstructionList list3;
+Construction* constructionlist = list3.getConstructions();
+
+//Selected area objects & vars
 int areaselected = 0;
 int areaselectupdatecheck = areaselected;
 int numberofareas = 1;
@@ -30,19 +41,19 @@ Texture background("image.png");
 
 void GUI()
 {
-	ImGui::Begin("Tree Farm Manager");
-
-	ImGui::Text("Use right click to add points to a field, and left-click to undo the last click.");
+	ImGui::Begin("Area Editor"); //GUI which creates, edits and selects areas
 
 	ImGui::SliderInt("Selected area", &areaselected, 0, numberofareas-1);  // Edit 1 integer with a slider
 
 	if (areaselected != areaselectupdatecheck) { //change the GUI selected color to the color of the area once
 		fill_color = arealist[areaselected].getRGBO();
+		prev_fill_color = arealist[areaselectupdatecheck].getRGBO();
+		arealist[areaselectupdatecheck].setRGBO((GLfloat)prev_fill_color.x, (GLfloat)prev_fill_color.y, (GLfloat)prev_fill_color.z, (GLfloat)0.2f);
 		areaselectupdatecheck = areaselected;
 	}
 
-	ImGui::ColorEdit4("Fill color", (float*)&fill_color); // Edit 4 floats representing a color
-	arealist[areaselected].setRGBO((GLfloat)fill_color.x, (GLfloat)fill_color.y, (GLfloat)fill_color.z, (GLfloat)fill_color.w);
+	ImGui::ColorEdit3("Fill color", (float*)&fill_color); // Edit 4 floats representing a color
+	arealist[areaselected].setRGBO((GLfloat)fill_color.x, (GLfloat)fill_color.y, (GLfloat)fill_color.z, (GLfloat) 0.8f);
 
 	if (ImGui::Button("Add area"))
 		if (numberofareas <= 30) {
@@ -50,7 +61,29 @@ void GUI()
 			areaselected = numberofareas-1;
 		}
 	
-	ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
+	ImGui::Text("%.1f FPS", ImGui::GetIO().Framerate);
+	ImGui::End();
+
+	/*-----------------------------------------------------------*/
+
+	ImGui::Begin("Area Options"); //Dynamic GUI which shows options per area
+
+	if (((arealist[areaselected].getFirstDotX() == farmlist[areaselected].getFirstDotX()) && (arealist[areaselected].getFirstDotY() == farmlist[areaselected].getFirstDotY())) && farmlist[areaselected].getFirstDotX() != -1) {
+		ImGui::Text("its a farm!");
+	} else if (((arealist[areaselected].getFirstDotX() == constructionlist[areaselected].getFirstDotX()) && (arealist[areaselected].getFirstDotY() == constructionlist[areaselected].getFirstDotY())) && constructionlist[areaselected].getFirstDotX() != -1) {
+		ImGui::Text("its a construction!");
+	}
+	else {
+		if (ImGui::Button("Make area a farm")) {
+			Farm farm(arealist[areaselected]);
+			farmlist[areaselected] = farm;
+		}
+		if (ImGui::Button("Make area a construction")) {
+			Construction construction(arealist[areaselected]);
+			constructionlist[areaselected] = construction;
+		}
+	}
+
 	ImGui::End();
 }
 
