@@ -1,5 +1,8 @@
 #ifndef POLYAREA_H
 #define POLYAREA_H
+#include "imgui.h"
+#include "imgui_impl_glut.h"
+#include "imgui_impl_opengl2.h"
 
 class PolyArea 
 {
@@ -31,6 +34,8 @@ class PolyArea
 		/*float* getVertices();
 		void constructVertices();*/
 		void setRGBO(GLfloat rp, GLfloat gp, GLfloat bp, GLfloat op);
+		void removeLastPoint();
+		ImVec4 getRGBO();
 };
 
 #endif

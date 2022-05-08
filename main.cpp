@@ -12,7 +12,7 @@
 #include "AreaList.h"
 
 //default value for color selector in gui
-static ImVec4 clear_color = ImVec4(0.45f, 0.55f, 0.60f, 1.00f);
+static ImVec4 fill_color = ImVec4(0.45f, 0.55f, 0.60f, 0.30f);
 
 //window width and height
 double w;
@@ -22,6 +22,7 @@ double h;
 AreaList list;
 PolyArea* arealist = list.getAreas();
 int areaselected = 0;
+int areaselectupdatecheck = areaselected;
 int numberofareas = 1;
 
 //Background image object
@@ -29,24 +30,26 @@ Texture background("image.png");
 
 void GUI()
 {
-	static float f = 0.0f;
-	static int counter = 0;
+	ImGui::Begin("Tree Farm Manager");
 
-	ImGui::Begin("Hello, world!");                          // Create a window called "Hello, world!" and append into it.
+	ImGui::Text("Use right click to add points to a field, and left-click to undo the last click.");
 
-	ImGui::Text("This is some useful text.");               // Display some text (you can use a format strings too)
-	//ImGui::Checkbox("Demo Window", &show_demo_window);      // Edit bools storing our window open/close state
+	ImGui::SliderInt("Selected area", &areaselected, 0, numberofareas-1);  // Edit 1 integer with a slider
 
-	ImGui::SliderFloat("float", &f, 0.0f, 1.0f);            // Edit 1 float using a slider from 0.0f to 1.0f
-	ImGui::ColorEdit3("clear color", (float*)&clear_color); // Edit 3 floats representing a color
+	if (areaselected != areaselectupdatecheck) { //change the GUI selected color to the color of the area once
+		fill_color = arealist[areaselected].getRGBO();
+		areaselectupdatecheck = areaselected;
+	}
 
-	if (ImGui::Button("Button"))                            // Buttons return true when clicked (most widgets return true when edited/activated)
-		counter++;
-	ImGui::SameLine();
-	ImGui::Text("counter = %d", counter);
+	ImGui::ColorEdit4("Fill color", (float*)&fill_color); // Edit 4 floats representing a color
+	arealist[areaselected].setRGBO((GLfloat)fill_color.x, (GLfloat)fill_color.y, (GLfloat)fill_color.z, (GLfloat)fill_color.w);
 
-	ImGui::Text("%d", ImGui::IsMouseClicked(0));
-
+	if (ImGui::Button("Add area"))
+		if (numberofareas <= 30) {
+			numberofareas++;
+			areaselected = numberofareas-1;
+		}
+	
 	ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
 	ImGui::End();
 }
@@ -64,9 +67,8 @@ void mouse(int button, int mousex, int mousey) {
 		glClear(GL_COLOR_BUFFER_BIT);
 	}
 	else if (button == 1) {
-		if (numberofareas <= 30) {
-			areaselected++;
-			numberofareas++;
+		if (arealist[areaselected].getI() >= 1) {
+			arealist[areaselected].removeLastPoint();
 		}
 	}
 	glutPostRedisplay();

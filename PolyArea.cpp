@@ -6,6 +6,9 @@
 #include <SOIL/SOIL.h>
 #include "PolyArea.h"
 #include <random>
+#include "imgui.h"
+#include "imgui_impl_glut.h"
+#include "imgui_impl_opengl2.h"
 
 PolyArea::PolyArea() {
 	this->first_line_y = -1;
@@ -139,4 +142,27 @@ void PolyArea::setRGBO(GLfloat rp, GLfloat gp, GLfloat bp, GLfloat op) {
 	this->g = gp;
 	this->b = bp;
 	this->o = op;
+}
+
+ImVec4 PolyArea::getRGBO() {
+	ImVec4 returner = ImVec4(this->r, this->g, this->b, this->o);
+	return returner;
+}
+
+void PolyArea::removeLastPoint() {
+	if (this->i > 1) {
+		this->line_x[i - 1] = line_x[i];
+		this->line_y[i - 1] = line_y[i];
+		this->dot_x[i - 1] = dot_x[i];
+		this->dot_y[i - 1] = dot_y[i];
+		this->i--;
+	}
+	else if (this->i <= 1) {
+		this->first_line_y = -1;
+		this->first_dot_x = -1;
+		this->first_dot_y = -1;
+		this->first_line_x = -1;
+		this->i = 1;
+	}
+	
 }
