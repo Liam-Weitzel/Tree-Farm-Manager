@@ -82,18 +82,133 @@ void GUI()
 
 	if (((arealist[areaselected].getFirstDotX() == farmlist[areaselected].getFirstDotX()) && (arealist[areaselected].getFirstDotY() == farmlist[areaselected].getFirstDotY())) && farmlist[areaselected].getFirstDotX() != -1) {
 		//If the area is a farm:
+
+		ImGui::Button("Add harvesting task");
+		ImGui::Button("Add planting task");
+		ImGui::Button("Add plowing task");
+		ImGui::Button("Add milling task");
+		ImGui::Button("Add shredding task");
+		ImGui::Button("Add pruning task");
+
 		if (((arealist[areaselected].getFirstDotX() == olivelist[areaselected].getFirstDotX()) && (arealist[areaselected].getFirstDotY() == olivelist[areaselected].getFirstDotY())) && olivelist[areaselected].getFirstDotX() != -1) {
 			//If the area is an olive farm
-			ImGui::Text("its an olive farm!");
+			ImGui::Text("This is an olive plot");
+			std::string str = olivelist[areaselected].getPossibleSpecies()[0];
+			char species0[128];
+			strcpy(species0, str.c_str());
+			str = olivelist[areaselected].getPossibleSpecies()[1];
+			char species1[128];
+			strcpy(species1, str.c_str());
+			str = olivelist[areaselected].getPossibleSpecies()[2];
+			char species2[128];
+			strcpy(species2, str.c_str());
+
+			int state0 = 1;
+			int state1 = 1;
+			int state2 = 1;
+			if (olivelist[areaselected].getSpecies() == 0) {
+				state0 = 0;
+			}
+			else if (olivelist[areaselected].getSpecies() == 1) {
+				state1 = 0;
+			}
+			else if (olivelist[areaselected].getSpecies() == 2) {
+				state2 = 0;
+			}
+			
+			ImGui::Text("Select species:");
+			if (ImGui::RadioButton(species0, &state0, 0)) {
+				olivelist[areaselected].setSpecies(0);
+			}
+			else if (ImGui::RadioButton(species1, &state1, 0)) {
+				olivelist[areaselected].setSpecies(1);
+			}
+			else if (ImGui::RadioButton(species2, &state2, 0)) {
+				olivelist[areaselected].setSpecies(2);
+			}
+
+			ImGui::Button("Add fertilization task");
+			ImGui::Button("Add disenfection task");
+
 		} else if (((arealist[areaselected].getFirstDotX() == orangelist[areaselected].getFirstDotX()) && (arealist[areaselected].getFirstDotY() == orangelist[areaselected].getFirstDotY())) && orangelist[areaselected].getFirstDotX() != -1) {
 			//If the area is an orange farm
-			ImGui::Text("its an orange farm!");
+			ImGui::Text("This is an orange plot");
+			std::string str = orangelist[areaselected].getPossibleSpecies()[0];
+			char species0[128];
+			strcpy(species0, str.c_str());
+			str = orangelist[areaselected].getPossibleSpecies()[1];
+			char species1[128];
+			strcpy(species1, str.c_str());
+			str = orangelist[areaselected].getPossibleSpecies()[2];
+			char species2[128];
+			strcpy(species2, str.c_str());
+
+			int state0 = 1;
+			int state1 = 1;
+			int state2 = 1;
+			if (orangelist[areaselected].getSpecies() == 0) {
+				state0 = 0;
+			}
+			else if (orangelist[areaselected].getSpecies() == 1) {
+				state1 = 0;
+			}
+			else if (orangelist[areaselected].getSpecies() == 2) {
+				state2 = 0;
+			}
+
+			ImGui::Text("Select species:");
+			if (ImGui::RadioButton(species0, &state0, 0)) {
+				orangelist[areaselected].setSpecies(0);
+			}
+			else if (ImGui::RadioButton(species1, &state1, 0)) {
+				orangelist[areaselected].setSpecies(1);
+			}
+			else if (ImGui::RadioButton(species2, &state2, 0)) {
+				orangelist[areaselected].setSpecies(2);
+			}
+
+			ImGui::Button("Add fertilization task");
+			ImGui::Button("Add disenfection task");
+
 		} else if (((arealist[areaselected].getFirstDotX() == almondlist[areaselected].getFirstDotX()) && (arealist[areaselected].getFirstDotY() == almondlist[areaselected].getFirstDotY())) && almondlist[areaselected].getFirstDotX() != -1) {
 			//If the area is an almond farm
-			ImGui::Text("its an almond farm!");
+			ImGui::Text("This is an almond plot");
+			std::string str = almondlist[areaselected].getPossibleSpecies()[0];
+			char species0[128];
+			strcpy(species0, str.c_str());
+			str = almondlist[areaselected].getPossibleSpecies()[1];
+			char species1[128];
+			strcpy(species1, str.c_str());
+			str = almondlist[areaselected].getPossibleSpecies()[2];
+			char species2[128];
+			strcpy(species2, str.c_str());
+
+			int state0 = 1;
+			int state1 = 1;
+			int state2 = 1;
+			if (almondlist[areaselected].getSpecies() == 0) {
+				state0 = 0;
+			}
+			else if (almondlist[areaselected].getSpecies() == 1) {
+				state1 = 0;
+			}
+			else if (almondlist[areaselected].getSpecies() == 2) {
+				state2 = 0;
+			}
+
+			ImGui::Text("Select species:");
+			if (ImGui::RadioButton(species0, &state0, 0)) {
+				almondlist[areaselected].setSpecies(0);
+			}
+			else if (ImGui::RadioButton(species1, &state1, 0)) {
+				almondlist[areaselected].setSpecies(1);
+			}
+			else if (ImGui::RadioButton(species2, &state2, 0)) {
+				almondlist[areaselected].setSpecies(2);
+			}
 		}
 		else {
-			ImGui::Text("its a farm!");
+			ImGui::Text("Specify type of farm:");
 			if (ImGui::Button("Make area an olive farm")) {
 				Olive olive(farmlist[areaselected]);
 				olivelist[areaselected] = olive;
@@ -109,7 +224,7 @@ void GUI()
 		}
 	} else if (((arealist[areaselected].getFirstDotX() == constructionlist[areaselected].getFirstDotX()) && (arealist[areaselected].getFirstDotY() == constructionlist[areaselected].getFirstDotY())) && constructionlist[areaselected].getFirstDotX() != -1) {
 		//If it area is a construction site:
-
+		ImGui::Text("This is a construction site");
 		std::string str = constructionlist[areaselected].getContractor();
 		char contractor[128];
 		strcpy(contractor, str.c_str());
@@ -129,6 +244,7 @@ void GUI()
 	}
 	else {
 		//if the area is not a farm or construction site:
+		ImGui::Text("Specify type of area:");
 		if (ImGui::Button("Make area a farm")) {
 			Farm farm(arealist[areaselected]);
 			farmlist[areaselected] = farm;
@@ -165,17 +281,23 @@ void mouse(int button, int mousex, int mousey) {
 void render()
 {
 	//What mousedata ImGUI processes vs what mousedata Glut will process
-	if ((ImGui::IsMouseClicked(0) || ImGui::IsMouseClicked(1)) && !ImGui::IsWindowHovered(ImGuiHoveredFlags_AnyWindow) && !ImGui::IsWindowFocused(ImGuiFocusedFlags_AnyWindow)) { ;
-		ImVec2 mousepos = ImGui::GetMousePos();
-		int button = 0;
-		if (ImGui::IsMouseClicked(0)) {
-			button = 0;
+	try {
+		if ((ImGui::IsMouseClicked(0) || ImGui::IsMouseClicked(1)) && !ImGui::IsWindowHovered(ImGuiHoveredFlags_AnyWindow) && !ImGui::IsWindowFocused(ImGuiFocusedFlags_AnyWindow)) {
+			;
+			ImVec2 mousepos = ImGui::GetMousePos();
+			int button = 0;
+			if (ImGui::IsMouseClicked(0)) {
+				button = 0;
+			}
+			else if (ImGui::IsMouseClicked(1)) {
+				button = 1;
+			}
+			mouse(button, mousepos.x, mousepos.y);
+			//std::cout << mousepos.x << "<<X , Y>>" << mousepos.y << "\n";
 		}
-		else if (ImGui::IsMouseClicked(1)) {
-			button = 1;
-		}
-		mouse(button, mousepos.x, mousepos.y);
-		//std::cout << mousepos.x << "<<X , Y>>" << mousepos.y << "\n";
+	}
+	catch (const std::exception& e) {
+		std::cout << e.what();
 	}
 
 	glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
@@ -208,7 +330,13 @@ void render()
 	ImGui_ImplOpenGL2_NewFrame();
 	ImGui_ImplGLUT_NewFrame();
 
-	GUI();
+	try {
+		GUI();
+	}
+	catch (const std::exception& e) {
+		std::cout << e.what();
+	}
+	
 
 	// Rendering
 	ImGui::Render();
@@ -221,24 +349,36 @@ void render()
 
 int main(int argc, char* argv[])
 {
-	glutInit(&argc, argv);
-	glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB | GLUT_DEPTH);
-	glutInitWindowSize(1000, 1000);
-	glutCreateWindow("Tree Farm Manager");
-	glutDisplayFunc(render);
+	try {
+		glutInit(&argc, argv);
+		glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB | GLUT_DEPTH);
+		glutInitWindowSize(1000, 1000);
+		glutCreateWindow("Tree Farm Manager");
+		glutDisplayFunc(render);
 
-	w = glutGet(GLUT_WINDOW_WIDTH);
-	h = glutGet(GLUT_WINDOW_HEIGHT);
-	background.glInitTexture();
+		w = glutGet(GLUT_WINDOW_WIDTH);
+		h = glutGet(GLUT_WINDOW_HEIGHT);
+		background.glInitTexture();
+	}
+	catch (const std::exception& e) {
+		std::cout << e.what();
+		exit(1);
+	}
 
 	// Setup imGui context, style & Platform/Renderer backends
-	IMGUI_CHECKVERSION();
-	ImGui::CreateContext();
-	ImGuiIO& io = ImGui::GetIO(); (void)io;
-	ImGui::StyleColorsDark();
-	ImGui_ImplGLUT_Init();
-	ImGui_ImplGLUT_InstallFuncs();
-	ImGui_ImplOpenGL2_Init();
+	try {
+		IMGUI_CHECKVERSION();
+		ImGui::CreateContext();
+		ImGuiIO& io = ImGui::GetIO(); (void)io;
+		ImGui::StyleColorsDark();
+		ImGui_ImplGLUT_Init();
+		ImGui_ImplGLUT_InstallFuncs();
+		ImGui_ImplOpenGL2_Init();
+	}
+	catch (const std::exception& e) {
+		std::cout << e.what();
+		exit(1);
+	}
 
 	glutMainLoop();
 
