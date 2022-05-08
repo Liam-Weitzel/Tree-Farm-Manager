@@ -14,6 +14,12 @@
 #include "FarmList.h"
 #include "Construction.h"
 #include "ConstructionList.h"
+#include "Olive.h"
+#include "OliveList.h"
+#include "Orange.h"
+#include "OrangeList.h"
+#include "Almond.h"
+#include "AlmondList.h"
 
 //default value for color selector in gui
 static ImVec4 fill_color = ImVec4(0.45f, 0.55f, 0.60f, 0.20f);
@@ -30,6 +36,12 @@ FarmList list2;
 Farm* farmlist = list2.getFarms();
 ConstructionList list3;
 Construction* constructionlist = list3.getConstructions();
+OliveList list4;
+Olive* olivelist = list4.getOlives();
+OrangeList list5;
+Orange* orangelist = list5.getOranges();
+AlmondList list6;
+Almond* almondlist = list6.getAlmonds();
 
 //Selected area objects & vars
 int areaselected = 0;
@@ -69,11 +81,54 @@ void GUI()
 	ImGui::Begin("Area Options"); //Dynamic GUI which shows options per area
 
 	if (((arealist[areaselected].getFirstDotX() == farmlist[areaselected].getFirstDotX()) && (arealist[areaselected].getFirstDotY() == farmlist[areaselected].getFirstDotY())) && farmlist[areaselected].getFirstDotX() != -1) {
-		ImGui::Text("its a farm!");
+		//If the area is a farm:
+		if (((arealist[areaselected].getFirstDotX() == olivelist[areaselected].getFirstDotX()) && (arealist[areaselected].getFirstDotY() == olivelist[areaselected].getFirstDotY())) && olivelist[areaselected].getFirstDotX() != -1) {
+			//If the area is an olive farm
+			ImGui::Text("its an olive farm!");
+		} else if (((arealist[areaselected].getFirstDotX() == orangelist[areaselected].getFirstDotX()) && (arealist[areaselected].getFirstDotY() == orangelist[areaselected].getFirstDotY())) && orangelist[areaselected].getFirstDotX() != -1) {
+			//If the area is an orange farm
+			ImGui::Text("its an orange farm!");
+		} else if (((arealist[areaselected].getFirstDotX() == almondlist[areaselected].getFirstDotX()) && (arealist[areaselected].getFirstDotY() == almondlist[areaselected].getFirstDotY())) && almondlist[areaselected].getFirstDotX() != -1) {
+			//If the area is an almond farm
+			ImGui::Text("its an almond farm!");
+		}
+		else {
+			ImGui::Text("its a farm!");
+			if (ImGui::Button("Make area an olive farm")) {
+				Olive olive(farmlist[areaselected]);
+				olivelist[areaselected] = olive;
+			}
+			if (ImGui::Button("Make area an orange farm")) {
+				Orange orange(farmlist[areaselected]);
+				orangelist[areaselected] = orange;
+			}
+			if (ImGui::Button("Make area an almond farm")) {
+				Almond almond(farmlist[areaselected]);
+				almondlist[areaselected] = almond;
+			}
+		}
 	} else if (((arealist[areaselected].getFirstDotX() == constructionlist[areaselected].getFirstDotX()) && (arealist[areaselected].getFirstDotY() == constructionlist[areaselected].getFirstDotY())) && constructionlist[areaselected].getFirstDotX() != -1) {
-		ImGui::Text("its a construction!");
+		//If it area is a construction site:
+
+		std::string str = constructionlist[areaselected].getContractor();
+		char contractor[128];
+		strcpy(contractor, str.c_str());
+		str = constructionlist[areaselected].getStart();
+		char startdate[128];
+		strcpy(startdate, str.c_str());
+		str = constructionlist[areaselected].getEnd();
+		char enddate[128];
+		strcpy(enddate, str.c_str());
+
+		ImGui::InputText("Contractor", contractor, IM_ARRAYSIZE(contractor));
+		constructionlist[areaselected].setContractor(contractor);
+		ImGui::InputText("Start date", startdate, IM_ARRAYSIZE(startdate));
+		constructionlist[areaselected].setStart(startdate);
+		ImGui::InputText("End date", enddate, IM_ARRAYSIZE(enddate));
+		constructionlist[areaselected].setEnd(enddate);
 	}
 	else {
+		//if the area is not a farm or construction site:
 		if (ImGui::Button("Make area a farm")) {
 			Farm farm(arealist[areaselected]);
 			farmlist[areaselected] = farm;
