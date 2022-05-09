@@ -73,7 +73,7 @@ void GUI()
 			areaselected = numberofareas-1;
 		}
 	
-	ImGui::Text("%.1f FPS", ImGui::GetIO().Framerate);
+	ImGui::Text("%.1f FPS", ImGui::GetIO().Framerate); //FPS counter
 	ImGui::End();
 
 	/*-----------------------------------------------------------*/
@@ -83,7 +83,7 @@ void GUI()
 	if (((arealist[areaselected].getFirstDotX() == farmlist[areaselected].getFirstDotX()) && (arealist[areaselected].getFirstDotY() == farmlist[areaselected].getFirstDotY())) && farmlist[areaselected].getFirstDotX() != -1) {
 		//If the area is a farm:
 
-		ImGui::Button("Add harvesting task");
+		ImGui::Button("Add harvesting task"); //Add if statement around buttons to add functionality, button = true when clicked
 		ImGui::Button("Add planting task");
 		ImGui::Button("Add plowing task");
 		ImGui::Button("Add milling task");
@@ -93,6 +93,7 @@ void GUI()
 		if (((arealist[areaselected].getFirstDotX() == olivelist[areaselected].getFirstDotX()) && (arealist[areaselected].getFirstDotY() == olivelist[areaselected].getFirstDotY())) && olivelist[areaselected].getFirstDotX() != -1) {
 			//If the area is an olive farm
 			ImGui::Text("This is an olive plot");
+			//Get all possible species for selected area
 			std::string str = olivelist[areaselected].getPossibleSpecies()[0];
 			char species0[128];
 			strcpy(species0, str.c_str());
@@ -103,22 +104,23 @@ void GUI()
 			char species2[128];
 			strcpy(species2, str.c_str());
 
+			//Set states for radio buttons to off
 			int state0 = 1;
 			int state1 = 1;
 			int state2 = 1;
-			if (olivelist[areaselected].getSpecies() == 0) {
+			if (olivelist[areaselected].getSpecies() == 0) { //Fetch state button from selected area
 				state0 = 0;
 			}
-			else if (olivelist[areaselected].getSpecies() == 1) {
+			else if (olivelist[areaselected].getSpecies() == 1) { 
 				state1 = 0;
 			}
 			else if (olivelist[areaselected].getSpecies() == 2) {
 				state2 = 0;
 			}
 			
-			ImGui::Text("Select species:");
+			ImGui::Text("Select species:"); //Radio buttons to select species
 			if (ImGui::RadioButton(species0, &state0, 0)) {
-				olivelist[areaselected].setSpecies(0);
+				olivelist[areaselected].setSpecies(0); //Set species of selected area
 			}
 			else if (ImGui::RadioButton(species1, &state1, 0)) {
 				olivelist[areaselected].setSpecies(1);
@@ -133,6 +135,7 @@ void GUI()
 		} else if (((arealist[areaselected].getFirstDotX() == orangelist[areaselected].getFirstDotX()) && (arealist[areaselected].getFirstDotY() == orangelist[areaselected].getFirstDotY())) && orangelist[areaselected].getFirstDotX() != -1) {
 			//If the area is an orange farm
 			ImGui::Text("This is an orange plot");
+			//Get all possible species for selected area
 			std::string str = orangelist[areaselected].getPossibleSpecies()[0];
 			char species0[128];
 			strcpy(species0, str.c_str());
@@ -143,10 +146,11 @@ void GUI()
 			char species2[128];
 			strcpy(species2, str.c_str());
 
+			//Set states for radio buttons to off
 			int state0 = 1;
 			int state1 = 1;
 			int state2 = 1;
-			if (orangelist[areaselected].getSpecies() == 0) {
+			if (orangelist[areaselected].getSpecies() == 0) { //Fetch state button from selected area
 				state0 = 0;
 			}
 			else if (orangelist[areaselected].getSpecies() == 1) {
@@ -156,9 +160,9 @@ void GUI()
 				state2 = 0;
 			}
 
-			ImGui::Text("Select species:");
+			ImGui::Text("Select species:"); //Radio buttons to select species
 			if (ImGui::RadioButton(species0, &state0, 0)) {
-				orangelist[areaselected].setSpecies(0);
+				orangelist[areaselected].setSpecies(0); //Set species of selected area
 			}
 			else if (ImGui::RadioButton(species1, &state1, 0)) {
 				orangelist[areaselected].setSpecies(1);
@@ -173,6 +177,8 @@ void GUI()
 		} else if (((arealist[areaselected].getFirstDotX() == almondlist[areaselected].getFirstDotX()) && (arealist[areaselected].getFirstDotY() == almondlist[areaselected].getFirstDotY())) && almondlist[areaselected].getFirstDotX() != -1) {
 			//If the area is an almond farm
 			ImGui::Text("This is an almond plot");
+			
+			//Get all possible species for selected area
 			std::string str = almondlist[areaselected].getPossibleSpecies()[0];
 			char species0[128];
 			strcpy(species0, str.c_str());
@@ -183,10 +189,11 @@ void GUI()
 			char species2[128];
 			strcpy(species2, str.c_str());
 
+			//Set states for radio buttons to off
 			int state0 = 1;
 			int state1 = 1;
 			int state2 = 1;
-			if (almondlist[areaselected].getSpecies() == 0) {
+			if (almondlist[areaselected].getSpecies() == 0) { //Fetch state button from selected area
 				state0 = 0;
 			}
 			else if (almondlist[areaselected].getSpecies() == 1) {
@@ -196,9 +203,9 @@ void GUI()
 				state2 = 0;
 			}
 
-			ImGui::Text("Select species:");
+			ImGui::Text("Select species:"); //Radio buttons to select species
 			if (ImGui::RadioButton(species0, &state0, 0)) {
-				almondlist[areaselected].setSpecies(0);
+				almondlist[areaselected].setSpecies(0); //Set species of selected area
 			}
 			else if (ImGui::RadioButton(species1, &state1, 0)) {
 				almondlist[areaselected].setSpecies(1);
@@ -206,6 +213,7 @@ void GUI()
 			else if (ImGui::RadioButton(species2, &state2, 0)) {
 				almondlist[areaselected].setSpecies(2);
 			}
+
 		}
 		else {
 			ImGui::Text("Specify type of farm:");
@@ -225,6 +233,7 @@ void GUI()
 	} else if (((arealist[areaselected].getFirstDotX() == constructionlist[areaselected].getFirstDotX()) && (arealist[areaselected].getFirstDotY() == constructionlist[areaselected].getFirstDotY())) && constructionlist[areaselected].getFirstDotX() != -1) {
 		//If it area is a construction site:
 		ImGui::Text("This is a construction site");
+		//Fetch variables of selected area as default value for input text
 		std::string str = constructionlist[areaselected].getContractor();
 		char contractor[128];
 		strcpy(contractor, str.c_str());
@@ -236,7 +245,7 @@ void GUI()
 		strcpy(enddate, str.c_str());
 
 		ImGui::InputText("Contractor", contractor, IM_ARRAYSIZE(contractor));
-		constructionlist[areaselected].setContractor(contractor);
+		constructionlist[areaselected].setContractor(contractor); //Set input text to variable in selected area
 		ImGui::InputText("Start date", startdate, IM_ARRAYSIZE(startdate));
 		constructionlist[areaselected].setStart(startdate);
 		ImGui::InputText("End date", enddate, IM_ARRAYSIZE(enddate));
